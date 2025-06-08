@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number</title>
+    <style>
+
+        table, tr, td {
+            border: 1px solid black; 
+        }
+        table{
+            border-color: black;
+            border: solid;
+            
+        }
+
+        #errorMessage {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+    <h1>Prime Number Generator</h1>
+    <div class="mainbox">
+        <table>
+            <tr>
+                <td>START: </td>
+                <td><input type="text" id="startNum"   placeholder="give a starting number"></td>
+            </tr>
+            <tr>
+                <td>END: </td>
+                <td><input type="text" id="endNum"  placeholder="give an ending number"></td>
+            </tr>
+            <tr>
+                <td>Prime Number: </td>
+                <td><textarea id="primeOutput"  type="text-area" row="5" col="10" readonly></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="button" id="generateBtn">Generate</button>
+                <div id="errorMessage"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </center>
+
+
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const startInput = document.getElementById('startNum');
+            const endInput = document.getElementById('endNum');
+            const primeOutput = document.getElementById('primeOutput');
+            const errorMessage = document.getElementById('errorMessage');
+
+            errorMessage.textContent = ''; 
+            primeOutput.value = ''; 
+
+            let start = parseInt(startInput.value);
+            let end = parseInt(endInput.value);
+
+          
+            if (isNaN(start) || isNaN(end)) {
+                errorMessage.textContent = 'Please enter valid numbers for both START and END.';
+                return;
+            }
+            if (start < 0 || end < 0) {
+                 errorMessage.textContent = 'Numbers must be non-negative.';
+                 return;
+            }
+            if (start > end) {
+                errorMessage.textContent = 'START number cannot be greater than END number.';
+                return;
+            }
+            if (end > 1000000) { 
+                errorMessage.textContent = 'END number is too large for efficient calculation. Max 1,000,000.';
+                return;
+            }
+
+          
+            const primes = [];
+
+           
+            function isPrime(num) {
+                if (num <= 1) return false; // 0 and 1 are not prime
+                if (num <= 3) return true;  // 2 and 3 are prime
+                if (num % 2 === 0 || num % 3 === 0) return false; // Multiples of 2 or 3 are not prime
+
+                // Check for primes from 5 onwards
+                for (let i = 5; i * i <= num; i = i + 6) {
+                    if (num % i === 0 || num % (i + 2) === 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            for (let i = start; i <= end; i++) {
+                if (isPrime(i)) {
+                    primes.push(i);
+                }
+            }
+
+           
+            if (primes.length > 0) {
+                primeOutput.value = primes.join(', '); 
+            } else {
+                primeOutput.value = 'No prime numbers found in this range.';
+            }
+        });
+    </script>
+</body>
+</html>
