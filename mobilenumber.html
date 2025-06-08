@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mobile Validation</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        input { padding: 8px; }
+        button { padding: 8px 15px; cursor: pointer; }
+        #message { margin-top: 15px; font-weight: bold; }
+        .SUCCESS { color: green; }
+        .ERROR { color: red; }
+    </style>
+</head>
+<body>
+<center>
+    <h1>Mobile Number Validation Using JavaScript</h1>
+
+    <p>Enter Mobile Number:
+        <input type="text" id="mobileInput" placeholder="Enter 10 Digit Mobile Numb">
+    </p>
+    <p style="color: rgb(221, 37, 37);">NOTE: a valid number in India- (starts with 6, 7, 8, or 9)</p>
+    <br><br>
+    <button id="validateBtn">Validate</button>
+    <div id="message"></div>
+</center>
+    <script>
+        document.getElementById('validateBtn').addEventListener('click', function() {
+            const mobileInput = document.getElementById('mobileInput');
+            const messageDiv = document.getElementById('message');
+            const mobileNumber = mobileInput.value.trim();
+            const mobilePattern = /^[6789]\d{9}$/;
+
+            if (mobilePattern.test(mobileNumber)) {
+                messageDiv.textContent = 'Mobile number is valid!';
+                messageDiv.className = 'SUCCESS';
+            } else {
+                messageDiv.textContent = 'Invalid! Enter a 10-digit number (e.g., 9876543210).';
+                messageDiv.className = 'ERROR';
+            }
+        });
+    </script>
+
+</body>
+</html>
